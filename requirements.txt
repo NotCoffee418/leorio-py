@@ -2,3 +2,5 @@ pylint
 precise-runner
 pygame
 python-dotenv
+pyaudio
+numpy
