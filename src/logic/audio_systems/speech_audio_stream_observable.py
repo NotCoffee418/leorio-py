@@ -35,16 +35,16 @@ class SpeechAudioStreamObservable:
     def start(self):
         try:
             self.stream.start_stream()
-        except Exception as e:
-            print(f"An error occurred while starting the stream: {e}")
+        except Exception as ex:
+            print(f"An error occurred while starting the stream: {ex}")
 
     def stop(self):
         try:
             self.stream.stop_stream()
             self.stream.close()
             self.p.terminate()
-        except Exception as e:
-            print(f"An error occurred while stopping the stream: {e}")
+        except Exception as ex:
+            print(f"An error occurred while stopping the stream: {ex}")
 
     def add_observer(self, observer):
         self.observers.append(observer)

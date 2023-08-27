@@ -22,24 +22,12 @@ cd Desktop
 git clone https://github.com/NotCoffee418/leorio.git
 ```
 
-# Rust
+# Essentials
 Needed for mycroft build
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-sudo reboot
+# for numpy
+sudo apt-get install libatlas-base-dev 
 ```
-
-# delet this:
-<!-- # Mycroft core
-This is slow. It will warn pip upgrade and appear to do nothing. It is doing something.
-```bash
-cd ~/
-git clone https://github.com/MycroftAI/mycroft-core.git
-cd mycroft-core
-bash dev_setup.sh
-# Y, Y, N, Y, Y, ENTER, ENTER,
-``` -->
 
 # Precise engine
 ```
