@@ -1,3 +1,4 @@
-import os
-
-os.system('beep')
+pylint
+precise-runner
+pygame
+python-dotenv

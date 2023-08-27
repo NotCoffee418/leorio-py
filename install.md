@@ -21,3 +21,29 @@ ssh -T git@github.com
 cd Desktop
 git clone https://github.com/NotCoffee418/leorio.git
 ```
+
+# Rust
+Needed for mycroft build
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+sudo reboot
+```
+
+# delet this:
+<!-- # Mycroft core
+This is slow. It will warn pip upgrade and appear to do nothing. It is doing something.
+```bash
+cd ~/
+git clone https://github.com/MycroftAI/mycroft-core.git
+cd mycroft-core
+bash dev_setup.sh
+# Y, Y, N, Y, Y, ENTER, ENTER,
+``` -->
+
+# Precise engine
+```
+cd ~/
+wget https://github.com/MycroftAI/precise-data/raw/dist/armv7l/precise-engine.tar.gz
+tar xvf precise-engine.tar.gz
+```
