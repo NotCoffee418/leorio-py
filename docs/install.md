@@ -6,6 +6,21 @@ cd seeed-voicecard
 ./install.sh
 ```
 
+## Device IP
+Not required, but logging for reference. Adjust as needed or skip.
+```bash
+sudo nano /etc/network/interfaces
+```
+append:
+```
+auto wlan0
+iface wlan0 inet static
+address 192.168.0.101
+netmask 255.255.255.0
+gateway 192.168.0.1
+dns-nameservers 192.168.0.100
+```
+
 # Git
 ```bash
 git config --global user.name "NotCoffee418"

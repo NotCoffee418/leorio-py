@@ -1,6 +1,7 @@
 import pyaudio
 import numpy as np
 
+
 class SpeechAudioStreamObservable:
     def __init__(self):
         # Set hardcoded values
@@ -26,7 +27,7 @@ class SpeechAudioStreamObservable:
         audio_data = np.frombuffer(in_data, dtype=np.int16)
 
         # Amplify volume (Be cautious of clipping)
-        #audio_data = np.clip(audio_data * 2, -32768, 32767)
+        # audio_data = np.clip(audio_data * 2, -32768, 32767)
 
         # Notify observers
         for observer in self.observers:
@@ -69,8 +70,8 @@ def find_seed_device_index():
                 return i
 
     p.terminate()
-    raise Exception(f"Device with description containing '{target_description}' not found")
-
+    raise Exception(
+        f"Device with description containing '{target_description}' not found")
 
 
 # Example observer class for PreciseRunner

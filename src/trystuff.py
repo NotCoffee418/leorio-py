@@ -6,5 +6,4 @@ import logic.audio_systems.audio_experiments as rectest
 rectest.list_audio_devices_and_rates()
 
 
-
 rectest.record_wav_test()
