@@ -1,5 +1,7 @@
 import pyaudio
-import numpy as np
+import logic.audio_systems.audio_transformers as at
+
+# Records and transforms audio to single channel, 16-bit PCM, 16kHz sample rate
 
 
 class SpeechAudioStreamObservable:
@@ -24,16 +26,27 @@ class SpeechAudioStreamObservable:
         )
 
     def _callback(self, in_data, frame_count, time_info, status):
-        audio_data = np.frombuffer(in_data, dtype=np.int16)
+        # Convert to np & seperate stereo channels
+        np_input = at.bytes_to_np(in_data)
+        np_left, np_right = at.seperate_channels(np_input)
 
-        # Amplify volume (Be cautious of clipping)
-        # audio_data = np.clip(audio_data * 2, -32768, 32767)
+        # Filter to human speech frequencies
+        # WIP: We need fix whitenoise first, then test again
+        # np_left = at.filter_human_speech_only(np_left, self.rate)
+        # np_right = at.filter_human_speech_only(np_right, self.rate)
+
+        # Volume boost
+        np_left = at.volume_boost(np_left, 3)
+        np_right = at.volume_boost(np_right, 3)
+
+        # Merge channels to single mono channel & back to binary
+        np_input = at.merge_two_channels(np_left, np_right)
+        out_data = at.np_to_bytes(np_input)
 
         # Notify observers
         for observer in self.observers:
-            observer.on_received(audio_data.tobytes())
-
-        return (audio_data.tobytes(), pyaudio.paContinue)
+            observer.on_received(out_data)
+        return (out_data, pyaudio.paContinue)
 
     def start(self):
         try:
