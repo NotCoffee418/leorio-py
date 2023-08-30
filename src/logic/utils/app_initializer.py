@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-import logic.audio_systems.precise_access as precise
+import logic.audio_systems.wakeword_access as precise
 
 def initialize_app():
     # Load .env file
