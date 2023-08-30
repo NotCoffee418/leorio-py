@@ -6,6 +6,12 @@ cd seeed-voicecard
 ./install.sh
 ```
 
+## Volume
+```bash
+alsamixer
+```
+Set capture device volume to max white (dont peak it in red)
+
 ## Device IP
 Not required, but logging for reference. Adjust as needed or skip.
 ```bash

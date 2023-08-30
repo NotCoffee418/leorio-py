@@ -7,7 +7,7 @@ import logic.audio_systems.audio_transformers as at
 class SpeechAudioStreamObservable:
     def __init__(self):
         # Set hardcoded values
-        self.rate = 16000
+        self.rate = 44100
         self.channels = 2
         self.format = pyaudio.paInt16
         self.frames_per_buffer = 1024
@@ -32,8 +32,8 @@ class SpeechAudioStreamObservable:
 
         # Filter to human speech frequencies
         # WIP: We need fix whitenoise first, then test again
-        # np_left = at.filter_human_speech_only(np_left, self.rate)
-        # np_right = at.filter_human_speech_only(np_right, self.rate)
+        np_left = at.filter_human_speech_only(np_left, self.rate)
+        np_right = at.filter_human_speech_only(np_right, self.rate)
 
         # Volume boost
         np_left = at.volume_boost(np_left, 3)

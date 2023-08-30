@@ -32,7 +32,7 @@ def record_wav_test():
 
     # Initialize the observer and add to the audio stream
     wav_observer = WavFileObserver(
-        io.get_path('data', 'test.wav'), 16000, 1, 3)
+        io.get_path('data', 'test.wav'), 44100, 1, 3)
     audio_stream_observable.add_observer(wav_observer)
 
     # Start the audio stream
