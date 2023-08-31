@@ -9,7 +9,7 @@ class SpeechAudioStreamObservable:
         # Set hardcoded values
         self.rate = 44100
         self.channels = 2
-        self.format = pyaudio.paInt16
+        self.format = pyaudio.paFloat32
         self.frames_per_buffer = 1024
         self.input_device_index = find_seed_device_index()
         self.observers = []

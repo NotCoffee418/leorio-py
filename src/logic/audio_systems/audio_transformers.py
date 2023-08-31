@@ -3,7 +3,7 @@ import numpy as np
 
 
 def bytes_to_np(bytes_data):
-    return np.frombuffer(bytes_data, dtype=np.int16)
+    return np.frombuffer(bytes_data, dtype=np.float32)
 
 
 def np_to_bytes(np_data):

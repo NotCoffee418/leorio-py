@@ -4,5 +4,9 @@ precise-runner
 pygame
 python-dotenv
 pyaudio
+jupyter
+nbstripout
+matplotlib
 # Scipy and Numpy for rasp (check latest version available -> https://www.piwheels.org/simple/numpy/)
 https://www.piwheels.org/simple/scipy/SciPy-1.8.1-cp39-cp39-linux_armv7l.whl#sha256=f6865c8d400b37c65af13b1d7751480840f99169da80478095508f2929365e39
+https://www.piwheels.org/simple/matplotlib/matplotlib-3.7.2-cp39-cp39-linux_armv7l.whl#sha256=db1c9e7eb85df21509c27f1b3dbc11971f96154701f51f739c7a2654162f4fcf
