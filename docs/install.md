@@ -7,10 +7,13 @@ cd seeed-voicecard
 ```
 
 ## Volume
+Recording volume should be set to max in UI if any after drivers installed.
+
 ```bash
 alsamixer
 ```
 Set capture device volume to max white (dont peak it in red)
+
 
 ## Device IP
 Not required, but logging for reference. Adjust as needed or skip.
@@ -27,11 +30,24 @@ gateway 192.168.0.1
 dns-nameservers 192.168.0.100
 ```
 
+# Swap file 
+creates 2G swap file
+```bash
+sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+vm.swappiness=10
+sudo sysctl -p
+free -h
+```
+
 # Git
 ```bash
 git config --global user.name "NotCoffee418"
 git config --global user.email "9306304+NotCoffee418@users.noreply.github.com"
-ssh-keygen -t ed25519 -C "9306304+NotCoffee418@users.noreply.github.com" -f ~/.ssh/id_github_ed25519
+ssh-keygen -t ed25519 -C "9306304+NotCoffee418@users.noreply.github.com" -f ~/.ssh/id_github_ed25519.pub
 cat ~/.ssh/id_github_ed25519 # add this key to github
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_github_ed25519
@@ -55,15 +71,4 @@ sudo apt-get install libatlas-base-dev
 cd ~/
 wget https://github.com/MycroftAI/precise-data/raw/dist/armv7l/precise-engine.tar.gz
 tar xvf precise-engine.tar.gz
-```
-
-# Swap file 
-creates 2G swap file
-```bash
-sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
-sudo chmod 600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
-echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
-free -h
 ```
