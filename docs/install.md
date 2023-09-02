@@ -56,10 +56,10 @@ ssh -T git@github.com
 
 
 # Essentials
-Needed for mycroft build & pyaudio
+Needed for mycroft
 ```bash
 # for numpy
-sudo apt-get install libatlas-base-dev libjack0 libportaudio2
+sudo apt-get install libatlas-base-dev libjack0 libportaudio2 libopenblas-dev libhdf5-dev portaudio19-dev
 ```
 
 # Setup environment
@@ -71,3 +71,6 @@ git clone https://github.com/NotCoffee418/leorio.git
 cd leorio
 pip3 install -r requirements.txt
 ```
+
+# Set up .env
+Copy .env.example to .env and fill in the blanks

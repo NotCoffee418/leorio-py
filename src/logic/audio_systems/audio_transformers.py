@@ -59,8 +59,8 @@ def volume_boost(np_channel, volume_ratio):
 
 
 def seperate_channels(np_data):
-    left_channel = np_data[::2]
-    right_channel = np_data[1::2]
+    left_channel = np_data[:, 0]
+    right_channel = np_data[:, 1]
     return left_channel, right_channel
 
 

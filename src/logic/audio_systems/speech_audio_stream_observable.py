@@ -1,6 +1,6 @@
-import pyaudio
 import logic.audio_systems.audio_transformers as at
 import logic.audio_systems.device_helpers as dh
+import sounddevice as sd
 
 
 class SpeechAudioStreamObservable:
@@ -8,26 +8,27 @@ class SpeechAudioStreamObservable:
         # Set hardcoded values
         self.rate = 44100
         self.channels = 2
-        self.format = pyaudio.paFloat32
         self.frames_per_buffer = 1024
         self.input_device_index = dh.find_seed_device_index()
         self.observers = []
+        self.running = False
 
-        self.p = pyaudio.PyAudio()
-        self.stream = self.p.open(
-            format=self.format,
+        self.stream = sd.InputStream(
+            samplerate=self.rate,
             channels=self.channels,
-            rate=self.rate,
-            input_device_index=self.input_device_index,
-            input=True,
-            frames_per_buffer=self.frames_per_buffer,
-            stream_callback=self._callback
+            dtype='float32',
+            blocksize=self.frames_per_buffer,
+            device=self.input_device_index,
+            callback=self._callback
         )
+        self.restart()
 
     def _callback(self, in_data, frame_count, time_info, status):
-        # Convert to np & seperate stereo channels
-        np_f32 = at.bytes_to_float32(in_data)
-        left, right = at.seperate_channels(np_f32)
+        if not self.running:
+            return
+
+        # Seperate channels
+        left, right = at.seperate_channels(in_data)
 
         # Filter to human speech frequencies
         # WIP: We need fix whitenoise first, then test again
@@ -51,19 +52,19 @@ class SpeechAudioStreamObservable:
         # Report data to observer
         for observer in self.observers:
             observer.on_received(out_binary_i16)
-        return (np_f32, pyaudio.paContinue)
 
-    def start(self):
+    def restart(self):
         try:
-            self.stream.start_stream()
+            self.running = True
+            self.stream.start()
         except Exception as ex:
             print(f"An error occurred while starting the stream: {ex}")
 
     def stop(self):
         try:
-            self.stream.stop_stream()
+            self.stream.stop()
             self.stream.close()
-            self.p.terminate()
+            self.running = False
         except Exception as ex:
             print(f"An error occurred while stopping the stream: {ex}")
 

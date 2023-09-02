@@ -1,9 +1,10 @@
 import os
 import urllib.request
 import tarfile
-from precise_runner import PreciseEngine, PreciseRunner
 import logic.utils.io_access as io
-from logic.audio_systems.speech_audio_stream_observable import SpeechAudioStreamObservable
+from precise_runner import PreciseEngine, PreciseRunner
+import logic.audio_systems.processed_mic_steam as pms
+
 
 precise_engine = None
 
@@ -12,30 +13,14 @@ def start_wakeword_detection(on_prediction, on_activation):
     if not precise_engine:
         raise Exception("Precise engine not initialized")
 
-    runner = PreciseRunner(precise_engine, on_prediction=on_prediction,
-                           on_activation=on_activation, trigger_level=0)
+    stream = pms.get_processed_mic_stream()
+    runner = PreciseRunner(
+        precise_engine,
+        on_prediction=on_prediction,
+        on_activation=on_activation,
+        trigger_level=0,
+        stream=stream)
     runner.start()
-    runner.stop()
-
-    class PreciseObserver:
-        def __init__(self, runner):
-            self.runner = runner
-
-        def update(self, audio_data):
-            self.runner.update(audio_data)
-            print(
-                f"Sent {len(audio_data)} bytes of audio data to PreciseRunner.")
-
-    audio_stream_observable = SpeechAudioStreamObservable()
-    precise_observer = PreciseObserver(runner)
-    audio_stream_observable.add_observer(precise_observer)
-    audio_stream_observable.start()
-
-    try:
-        while True:
-            pass
-    except KeyboardInterrupt:
-        audio_stream_observable.stop()
 
 
 def initialize_precise():
@@ -53,6 +38,9 @@ def _get_engine_exe_path():
 def _get_wakeword_model_path(override_model_filename=None):
     model_filename = override_model_filename or os.getenv(
         'WAKEWORD_MODEL_FILENAME')
+    if model_filename is None:
+        raise Exception(
+            "WAKEWORD_MODEL_FILENAME not set and no model filename provided")
     return io.get_path('data', 'precise-models', model_filename)
 
 
