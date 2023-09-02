@@ -54,21 +54,20 @@ ssh-add ~/.ssh/id_github_ed25519
 ssh -T git@github.com
 ```
 
+
+# Essentials
+Needed for mycroft build & pyaudio
+```bash
+# for numpy
+sudo apt-get install libatlas-base-dev libjack0 libportaudio2
+```
+
+# Setup environment
+No venv or conda because rasp.
+
 ```bash
 cd Desktop
 git clone https://github.com/NotCoffee418/leorio.git
-```
-
-# Essentials
-Needed for mycroft build
-```bash
-# for numpy
-sudo apt-get install libatlas-base-dev 
-```
-
-# Precise engine
-```
-cd ~/
-wget https://github.com/MycroftAI/precise-data/raw/dist/armv7l/precise-engine.tar.gz
-tar xvf precise-engine.tar.gz
+cd leorio
+pip3 install -r requirements.txt
 ```
