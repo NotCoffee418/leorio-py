@@ -59,7 +59,7 @@ ssh -T git@github.com
 Needed for mycroft
 ```bash
 # for numpy
-sudo apt-get install libatlas-base-dev libjack0 libportaudio2 libopenblas-dev libhdf5-dev portaudio19-dev
+sudo apt-get install python3-pip libatlas-base-dev libjack0 libportaudio2 libopenblas-dev libhdf5-dev portaudio19-dev
 ```
 
 # Setup environment
@@ -73,3 +73,8 @@ pip3 install -r requirements.txt
 
 # Set up .env
 Copy .env.example to .env and fill in the blanks
+
+# Clean notebooks
+```bash
+nbstripout --install
+```

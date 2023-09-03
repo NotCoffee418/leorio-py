@@ -4,7 +4,22 @@ import sounddevice as sd
 
 
 class SpeechAudioStreamObservable:
+    _instance = None
+    _is_initialized = False
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def __init__(self):
+        # singleton
+        if self._is_initialized:
+            return
+
+        self._is_initialized = True
+        print("boop")
+
         # Set hardcoded values
         self.rate = 44100
         self.channels = 2
