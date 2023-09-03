@@ -35,11 +35,17 @@ class FakePyAudioStream:
     def __init__(self):
         self.buffer = queue.Queue()
 
-    def read(self, num_frames, exception_on_overflow=True):
-        data = []
+    def read(self, num_frames, exception_on_overflow=False):
+        data = bytearray()
+        # Make sure to read exactly 'num_frames' frames
         for _ in range(num_frames):
-            if not self.buffer.empty():
+            if self.buffer.empty():
+                if (exception_on_overflow):
+                    raise IOError("Buffer is empty")
+                data.append(0)
+            else:
                 data.append(self.buffer.get())
+
         return bytes(data)
 
     def write(self, audio_data):
