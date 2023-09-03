@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.signal import butter, filtfilt
+from scipy.signal import butter, filtfilt, resample
 
 
 def bytes_to_float32(bytes_data):
@@ -70,3 +70,45 @@ def merge_two_channels(np_left_channel, np_right_channel):
 
 def clip_float32(np_data):
     return np.clip(np_data, -1, 1)
+
+
+def resample_audio(audio, orig_sr, target_sr):
+    """
+    Resample audio from original sample rate to target sample rate.
+
+    Parameters:
+    audio (numpy array): 1-D numpy array containing the audio signal.
+    orig_sr (int): Original sample rate of the audio signal.
+    target_sr (int): Target sample rate.
+
+    Returns:
+    numpy array: 1-D numpy array containing the resampled audio.
+    """
+    # Calculate the length of the resampled audio
+    target_len = int(len(audio) * (target_sr / orig_sr))
+
+    # Use scipy's resample function
+    resampled_audio = resample(audio, target_len)
+
+    return resampled_audio
+
+def calculate_new_frames_per_buffer(orig_frames_per_buffer, orig_sr, target_sr):
+    """
+    Calculate the new frames_per_buffer value to maintain the same buffer duration
+    after changing the sample rate.
+    
+    Parameters:
+    orig_frames_per_buffer (int): Original frames per buffer.
+    orig_sr (int): Original sample rate in Hz.
+    target_sr (int): Target sample rate in Hz.
+    
+    Returns:
+    int: New frames per buffer to maintain the same buffer duration.
+    """
+    # Calculate the time duration of the original buffer
+    buffer_duration = orig_frames_per_buffer / orig_sr
+    
+    # Calculate the new frames_per_buffer to maintain the same buffer duration
+    new_frames_per_buffer = int(buffer_duration * target_sr)
+    
+    return new_frames_per_buffer

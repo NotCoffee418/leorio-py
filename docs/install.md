@@ -78,3 +78,22 @@ Copy .env.example to .env and fill in the blanks
 ```bash
 nbstripout --install
 ```
+
+# Mic fix
+```bash
+sudo nano /etc/asound.conf
+```
+Replace pcm.!default with:
+```
+pcm.!default {
+    type asym
+    playback.pcm "playback"
+    capture.pcm {
+      type plug
+      slave.pcm "hw:1,0"
+    }
+}
+```
+```bash
+sudo /etc/init.d/alsa-utils restart
+```

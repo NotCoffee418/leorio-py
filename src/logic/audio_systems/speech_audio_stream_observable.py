@@ -18,16 +18,16 @@ class SpeechAudioStreamObservable:
             return
 
         self._is_initialized = True
-        print("boop")
 
         # Set hardcoded values
-        self.rate = 44100
+        self.rate = 48000
         self.channels = 2
         self.frames_per_buffer = 1024
         self.input_device_index = dh.find_seed_device_index()
         self.observers = []
         self.running = False
 
+        print("Initializing stream...")
         self.stream = sd.InputStream(
             samplerate=self.rate,
             channels=self.channels,
@@ -59,6 +59,9 @@ class SpeechAudioStreamObservable:
 
         # Clip to prevent overload
         np_f32 = at.clip_float32(np_f32)
+
+        # Change sample rate
+        np_f32 = at.resample_audio(np_f32, self.rate, 16000)
 
         # Convert to int16 binary for output
         np_i16 = at.float32_to_int16(np_f32)

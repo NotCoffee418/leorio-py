@@ -1,5 +1,6 @@
 import pyaudio
 import logic.audio_systems.speech_audio_stream_observable as saso
+import queue
 
 
 def get_processed_mic_stream():
@@ -13,17 +14,34 @@ def get_processed_mic_stream():
                 self.output_stream.write(audio_data)
 
     # Set up the pyaudio result stream
-    p = pyaudio.PyAudio()
-    output_stream = p.open(
-        format=pyaudio.paInt16,
-        channels=1,
-        rate=44100,
-        input=True,
-        frames_per_buffer=1024,
-        input_device_index=None)
+    # p = pyaudio.PyAudio()
+    # output_stream = p.open(
+    #     format=pyaudio.paInt16,
+    #     channels=1,
+    #     rate=48000,
+    #     input=True,
+    #     output=True,
+    #     frames_per_buffer=1024)
+    output_stream = FakePyAudioStream()
 
     # Initialize the observer and add to the audio stream
     input_observer = StreamMicProcessedObserver(output_stream)
     inptut_observable = saso.SpeechAudioStreamObservable()
     inptut_observable.add_observer(input_observer)
     return output_stream
+
+
+class FakePyAudioStream:
+    def __init__(self):
+        self.buffer = queue.Queue()
+
+    def read(self, num_frames, exception_on_overflow=True):
+        data = []
+        for _ in range(num_frames):
+            if not self.buffer.empty():
+                data.append(self.buffer.get())
+        return bytes(data)
+
+    def write(self, audio_data):
+        for b in audio_data:
+            self.buffer.put(b)

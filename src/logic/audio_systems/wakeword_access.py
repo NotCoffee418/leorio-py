@@ -9,7 +9,7 @@ import logic.audio_systems.processed_mic_steam as pms
 precise_engine = None
 
 
-def start_wakeword_detection(on_prediction, on_activation):
+def start_wakeword_detection(on_prediction=lambda x: None, on_activation=lambda: None):
     if not precise_engine:
         raise Exception("Precise engine not initialized")
 

@@ -4,6 +4,7 @@ python-dotenv
 nbstripout
 sounddevice
 h5py
+pulsectl
 https://www.piwheels.org/simple/ipykernel/ipykernel-6.25.1-py3-none-any.whl#sha256=c8a2430b357073b37c76c21c52184db42f6b4b0e438e1eb7df3c4440d120497c
 https://www.piwheels.org/simple/precise-runner/precise_runner-0.3.1-py3-none-any.whl#sha256=89fb9556b9bdab4703cbc1830793064b2b866e1ba1468abfc9735a8037a11879
 https://www.piwheels.org/simple/pyaudio/PyAudio-0.2.13-cp39-cp39-linux_armv7l.whl#sha256=add4d0896ec93be9b006ec0966e427f42f3dbfde8748b38d02bf57f5d92d2d5e

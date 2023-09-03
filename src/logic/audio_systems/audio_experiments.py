@@ -32,7 +32,7 @@ def record_wav_test():
 
     # Initialize the observer and add to the audio stream
     wav_observer = WavFileObserver(
-        io.get_path('data', 'test.wav'), 44100, 1, 3)
+        io.get_path('data', 'test.wav'), 48000, 1, 3)
     audio_stream_observable.add_observer(wav_observer)
 
     try:
@@ -55,7 +55,8 @@ def list_audio_devices_and_rates():
             for rate in [8000, 11025, 16000, 22050, 44100, 48000, 88200, 96000, 192000]:
                 try:
                     # Check if the rate is supported
-                    sd.check_input_settings(device=i, dtype='int16', samplerate=rate, channels=device['max_input_channels'])
+                    sd.check_input_settings(
+                        device=i, dtype='int16', samplerate=rate, channels=device['max_input_channels'])
                     print(f"    {rate} Hz")
                 except ValueError:
                     print(f"    Not supported: {rate} Hz")
