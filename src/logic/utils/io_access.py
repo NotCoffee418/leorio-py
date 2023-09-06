@@ -14,7 +14,7 @@ def get_repo_root():
     """Find the repository root directory"""
     current_path = os.path.abspath(__file__)
     while True:
-        if os.path.basename(current_path) == "leorio":
+        if os.path.basename(current_path) == "leorio-py":
             return current_path
 
         parent = os.path.dirname(current_path)
