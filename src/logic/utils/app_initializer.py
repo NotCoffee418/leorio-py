@@ -7,4 +7,4 @@ def initialize_app():
     load_dotenv()
 
     # Initialize precise
-    precise.initialize()
+    precise.initialize_precise()
