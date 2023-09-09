@@ -1,7 +1,7 @@
 
 from precise_runner import PreciseEngine, PreciseRunner
 import logic.audio_systems.processed_mic_steam as pms
-import _precise_initializer as _pinit
+import logic.audio_systems._precise_initializer as _pinit
 
 precise_engine = None
 
